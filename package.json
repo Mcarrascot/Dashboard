@@ -15,8 +15,5 @@
   "bugs": {
     "url": "https://github.com/Mcarrascot/Dashboard/issues"
   },
-  "homepage": "https://github.com/Mcarrascot/Dashboard#readme",
-  "dependencies": {
-    "chart.js": "^4.4.2"
-  }
+  "homepage": "https://github.com/Mcarrascot/Dashboard#readme"
 }
