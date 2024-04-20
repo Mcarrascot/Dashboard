@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 const printWeatherDataToScreen = (weatherData) => {
     // Mostrar datos meteorológicos actuales
-    const title = `Tiempo en ${weatherData.location.name}, ${weatherData.location.region}`;
+    const title = `Tiempo en ${weatherData.location.name}, ${weatherData.location.country}.`;
     document.getElementById("nombre-ciudad").textContent = title;
     document.getElementById("temperatura").textContent = weatherData.current.temp_c;
     document.getElementById("condición").textContent = weatherData.current.condition.text;
