@@ -1,9 +1,11 @@
+import { getWeatherData } from "./api.js";
 
 const searchInput = document.querySelector(".search-city");
 const searchButton = document.querySelector(".search-button");
 searchButton.addEventListener("click", async () => {
-    const city = searchInput.value;
-    // TODO: usar api para encontrar data sobre el tiempo en una ciudad
+    const ciudad = searchInput.value;
+    const data = await getWeatherData(ciudad);
+    // TODO: Desplegar información tiempo en la página
   });
 
   var ctx = document.getElementById('myChart').getContext('2d');
