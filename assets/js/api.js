@@ -8,7 +8,8 @@ export const getWeatherData = async (ciudad) => {
       q: ciudad,
       days: 7,
       aqi: "yes",
-      alerts: "no"
+      alerts: "no",
+      lang: 'es',
     }));
     const data = await response.json();
     return data;
