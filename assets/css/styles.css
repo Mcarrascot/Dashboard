@@ -3,24 +3,53 @@ body, navbar {
 }
 /* --- contenedores 1 -----*/
 .cards {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2,3fr); 
+
 }
 
+
 .card {
-    flex:50%;
+    flex:40%;
     margin: 20px;
-    min-width:400px;
+    min-width:200px;
     box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: .5s;
+    background: linear-gradient(to right, #4e9cff, #3895d3); /* Degradado de azul */
+    color: white;
+    display: flex;
+
 }
+
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+
+}
+
+/* --- propiedades del grafico -----*/
 
 .cardgrafico {
     display: start;
-    flex:50%;
+    flex:30%;
     margin: 30px;
-    min-width:200px;
+    width: 200px; /* Ancho deseado */
+    height: 100px; /* Alto deseado */
+    min-width:20px;
     box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
     background-color:white;
     
 
+}
+
+/* --- propiedades de las imagenes que estan dentro de las card -----*/
+
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 

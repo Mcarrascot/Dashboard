@@ -27,6 +27,10 @@ const printWeatherDataToScreen = (weatherData) => {
     document.getElementById("condición").textContent = weatherData.current.condition.text;
     document.getElementById("velocidad-viento").textContent = weatherData.current.wind_kph;
     document.getElementById("humedad").textContent = weatherData.current.humidity;
+    document.getElementById("calidad-aire").textContent = weatherData.current.air_quality;
+
+    // Mostrar datos card temperatura
+
 
     // UV index tabla
     const uvIndexData = {
@@ -55,15 +59,16 @@ const printWeatherDataToScreen = (weatherData) => {
     });
 }
 
-
+// chart grafico
+//var air_quality = { co: 310.4, gb-defra-index : 1, no2 : 4.2, o3: 32.5, pm2_5: 3.4, pm10: 5.3, so2 : 1.6, us-epa-index : 1}
   var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['co', 'gb', 'no2', 'o3', 'pm2_5', 'pm10'],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [310.4, 1, 4.2, 32.5, 3.4, 5.3],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
