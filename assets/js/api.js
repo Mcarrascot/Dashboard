@@ -12,11 +12,8 @@ export const getWeatherData = async (ciudad) => {
       lang: 'es',
     }));
     const data = await response.json();
-    console.log ("esta es la API",data)
     return data;
   } catch (error) {
     console.log("Error: No se pudo obtener datos meteorológicos.");
   }
 }
-
-//var air_quality = { co: 310.4, gb-defra-index : 1, no2 : 4.2, o3: 32.5, pm2_5: 3.4, pm10: 5.3, so2 : 1.6, us-epa-index : 1}

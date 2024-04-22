@@ -1,98 +1,128 @@
 import { getWeatherData } from "./api.js";
+import { obtenerFechaFormateada, obtenerHoraFormateada } from "./date.js";
 
-const searchInput = document.querySelector(".search-city");
-const searchButton = document.querySelector(".search-button");
-searchButton.addEventListener("click", async (event) => {
-    event.preventDefault(); // Evitar el comportamiento de envío de formulario predeterminado
-    const ciudad = searchInput.value;
-    if (!ciudad) return; // No hay nada que buscar? retorna antes. 
-    // TODO: Mostrar "cargando" mientras se espera por información.
-    const data = await getWeatherData(ciudad);
-    // TODO: Dejar de mostrar "cargando".
-    printWeatherDataToScreen(data);
-});
+const buscarInput = document.querySelector(".search-city");
+const buscarButton = document.querySelector(".search-button");
+const cargandoOverlay = document.querySelector(".cargando-overlay");
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const initialWeatherData = await getWeatherData('Concepcion');
-    console.log(initialWeatherData)
-    printWeatherDataToScreen(initialWeatherData);
-})
+const mostrarLoader = () => cargandoOverlay.classList.add("mostrar");
+const esconderLoader = () => cargandoOverlay.classList.remove("mostrar");
 
+const loadData = async (city) => {
+    try {
+        mostrarLoader();
+        const data = await getWeatherData(city);
+        printWeatherDataToScreen(data);
+    } catch (error) {
+        console.error("Error fetching initial weather data:", error);
+    } finally {
+        esconderLoader();
+    }
+}
+
+const handleSearch = async (event) => {
+    event.preventDefault();
+    const city = buscarInput.value;
+    if (city) loadData(city);
+}
 
 const printWeatherDataToScreen = (weatherData) => {
-    // Mostrar datos meteorológicos actuales
-    const title = `Tiempo en ${weatherData.location.name}, ${weatherData.location.country}.`;
-    document.getElementById("nombre-ciudad").textContent = title;
-    document.getElementById("temperatura").textContent = weatherData.current.temp_c;
-    document.getElementById("condición").textContent = weatherData.current.condition.text;
-    document.getElementById("velocidad-viento").textContent = weatherData.current.wind_kph;
-    document.getElementById("humedad").textContent = weatherData.current.humidity;
-    document.getElementById("calidad-aire").textContent = weatherData.current.air_quality;
+    const { current, location, forecast } = weatherData;
+    updateLocationInfo(location);
+    updateCurrentWeather(current);
+    renderWeatherTable(forecast);
+    renderTemperatureChart(forecast);
+}
 
-    // Mostrar datos card temperatura
+const updateLocationInfo = (location) => {
+    const formattedDate = obtenerFechaFormateada(location.localtime_epoch);
+    const time = obtenerHoraFormateada(location.localtime);
+    document.getElementById("nombre-ciudad").textContent = `${location.name},`;
+    document.getElementById("nombre-country").textContent = location.country;
+    document.getElementById("date").textContent = formattedDate;
+    document.getElementById("time").textContent = time;
+}
 
+const updateCurrentWeather = (current) => {
+    document.getElementById("temperatura").textContent = `${current.temp_c} °C`;
+    document.getElementById("condición-image").src = current.condition.icon;
+    document.getElementById("condición-text").textContent = current.condition.text;
+    document.getElementById("velocidad-viento").textContent = current.wind_kph;
+    document.getElementById("humedad").textContent = current.humidity;
+    document.getElementById("uvIndex").textContent = 4;
+}
 
-    // UV index tabla
-    const uvIndexData = {
-        labels: ["UV Index"],
-        datasets: [{
-            label: "UV Index",
-            backgroundColor: "rgba(255, 206, 86, 0.2)",
-            borderColor: "rgba(255, 206, 86, 1)",
-            borderWidth: 1,
-            data: [weatherData.current.uv]
-        }]
-    };
+const renderWeatherTable = (forecast) => {
+    const tableBody = document.getElementById("weatherTableBody");
+    tableBody.innerHTML = '';
+    forecast.forecastday.forEach(data => {
+        const date = new Date(data.date);
+        const dayOfWeek = date.toLocaleDateString("es-ES", { weekday: "long" });
+        const iconUrl = data.day.condition.icon.replace(/^http:\/\//i, "https://");
+        const weatherConditions = data.day.condition.text;
+        const row = document.createElement("tr");
+        const dateCell = document.createElement("td");
+        dateCell.textContent = dayOfWeek;
+        dateCell.class = "day-of-week";
+        const dayCell = document.createElement("td");
+        dayCell.textContent = weatherConditions;
+        const weatherCell = document.createElement("td");
+        const weatherIcon = document.createElement("img");
+        weatherIcon.src = iconUrl;
+        weatherIcon.alt = weatherConditions;
+        weatherCell.appendChild(weatherIcon);
+        row.appendChild(dateCell);
+        row.appendChild(weatherCell);
+        row.appendChild(dayCell);
+        tableBody.appendChild(row);
+    });
+}
 
-    const uvIndexCtx = document.getElementById("uvIndexChart").getContext("2d");
-    const uvIndexChart = new Chart(uvIndexCtx, {
-        type: "bar",
-        data: uvIndexData,
+const renderTemperatureChart = (forecast) => {
+    const { dates, temperaturasMáxima, temperaturasMínima } = extractForecastData(forecast);
+    const ctx = document.getElementById("forecastChart").getContext("2d");
+    const forecastChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: dates,
+            datasets: [{
+                label: "Temperatura Máxima (°C)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                data: temperaturasMáxima
+            }, {
+                label: "Temperatura mínima (°C)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                data: temperaturasMínima
+            }]
+        },
         options: {
             scales: {
                 y: {
-                    beginAtZero: true,
-                    max: 10
+                    beginAtZero: false
                 }
             }
         }
     });
 }
 
-// chart grafico
-//var air_quality = { co: 310.4, gb-defra-index : 1, no2 : 4.2, o3: 32.5, pm2_5: 3.4, pm10: 5.3, so2 : 1.6, us-epa-index : 1}
-  var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['co', 'gb', 'no2', 'o3', 'pm2_5', 'pm10'],
-        datasets: [{
-            label: '# of Votes',
-            data: [310.4, 1, 4.2, 32.5, 3.4, 5.3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
+const extractForecastData = (forecast) => {
+    const dates = [];
+    const temperaturasMáxima = [];
+    const temperaturasMínima = [];
+    forecast.forecastday.forEach(curr => {
+        dates.push(curr.date);
+        temperaturasMáxima.push(curr.day.maxtemp_c);
+        temperaturasMínima.push(curr.day.mintemp_c);
+    });
+    return { dates, temperaturasMáxima, temperaturasMínima };
+}
+
+
+// Event Listeners
+buscarButton.addEventListener("click", handleSearch);
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadData('Concepcion');
 });
