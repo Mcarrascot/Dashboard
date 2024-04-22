@@ -9,7 +9,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script defer type="module" src="assets/js/main.js"></script>
-    
+
     <title>Dashboard</title>
 </head>
 
@@ -20,8 +20,8 @@
             <a class="navbar-brand" href="#">
                 <img src="./assets/imgs/logo.png" alt="Logo" width="250" height="45"
                     class="d-inline-block align-text-top">
-            
-              </a>
+
+            </a>
             <form class="d-flex search-form" role="search">
                 <input class="form-control me-2 search-city" type="search" placeholder="Buscar ciudad"
                     aria-label="Search">
@@ -47,66 +47,66 @@
                             <h4 id="date"></h4>
 
 
-                  </div>
+                </div>
             </div>
-    </div>     
-  
+        </div>
 
-    <!--Sección cards temperatura - Humedad - viento  -indice uv-->
-            
-    <div class="cards">
+
+        <!--Sección cards temperatura - Humedad - viento  -indice uv-->
+
+        <div class="cards">
             <!-- Las condiciones climáticas -->
             <div class="card">
                 <div class="content">
-                  
-                        <div class="card-body">
+
+                    <div class="card-body">
                         <h6 class="card-title"><strong>Condiciones</strong></h6>
                         <img id="condición-image" height="65px" width="65px"></img>
                         <h2 id="temperatura"></h2>
                         <h5 id="condición-text"></h5>
-                        </div>
-                  
+                    </div>
+
                 </div>
             </div>
-        
 
-        <!-- Tarjeta de Humedad -->
+
+            <!-- Tarjeta de Humedad -->
             <div class="card">
                 <div class="content">
                     <div class="card-body">
-                     <h6 class="card-title"><strong>Humedad del ambiente</strong></h6>
+                        <h6 class="card-title"><strong>Humedad del ambiente</strong></h6>
                         <img src="assets/imgs/humedad.png" alt="" style="width:40%; padding: 10px 0">
                         <h3><span id="humedad"></span>%</h3>
-                    </div>  
+                    </div>
                 </div>
-            </div>        
-        
-         <!-- velocidad del viento -->
-          
+            </div>
+
+            <!-- velocidad del viento -->
+
             <div class="card">
                 <div class="content">
                     <div class="card-body">
-                    <h6 class="card-title"><strong>Velocidad del viento</strong></h6>
+                        <h6 class="card-title"><strong>Velocidad del viento</strong></h6>
                         <img src="assets/imgs/wind.png" alt="" style="width:50%">
                         <h3><span id="velocidad-viento"></span> km/h</h3>
                     </div>
-                    
+
                 </div>
-            </div>  
+            </div>
 
             <!-- indice UV -->
 
             <div class="card">
-              <div class="content">
-                <div class="card-body">
-                    <h6 class="card-title"><strong>Índice UV</strong></h6>
+                <div class="content">
+                    <div class="card-body">
+                        <h6 class="card-title"><strong>Índice UV</strong></h6>
                         <img src="assets/imgs/uv-index-icon.png" alt="" style="width:40%; padding: 10px 0">
                         <h3><span id="uvIndex"></span></h3>
                     </div>
                 </div>
-              </div>
-          </div>    
-     </div>
+            </div>
+        </div>
+    </div>
 
     <div class="cards">
         <div class="card">
@@ -127,10 +127,16 @@
                         <tbody id="weatherTableBody">
                         </tbody>
                     </table>
-     </div>
-    </div>        
-</div>
-</div>    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="spanner cargando-overlay">
+        <div class="loader"></div>
+        <p>Descargando información sobre el tiempo, por favor sea paciente.</p>
+    </div>
 </body>
 
 </html>
