@@ -2,11 +2,11 @@
 
 ![Pronostico Del Tiempo](https://github.com/Mcarrascot/Dashboard/blob/main/assets/imgs/logo.png)
 
-Este proyecto muestra las condiciones climaticas de las ciudades del mundo que desees, donde  mediante un buscador puedes puedes ingresar la ciudad y te mostrara las condiciones climaticas, radiacion uv, humedad, velocidad del viento, hora y los ultimos 7 días de clima.
+Este proyecto muestra las condiciones climáticas de las ciudades del mundo que desees ver, donde  mediante un buscador puedes ingresar la ciudad y te mostrará las condiciones climáticas, radiación uv, humedad, velocidad del viento, hora y los siguientes 7 días de clima.
 
-utilizamos  los siguientes componentes
+Utilizamos  los siguientes componentes
 chart js
-api wather
+api weather - https://www.weatherapi.com/
 node 
 html
 css
