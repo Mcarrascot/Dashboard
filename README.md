@@ -1,18 +1,19 @@
 # Dashboard Condiciones Climáticas 
 
-Este proyecto muestra las condiciones climáticas de las ciudades del mundo que desees, donde  mediante un buscador puedes puedes ingresar la ciudad y te mostrara las condiciones climaticas, radiacion uv, humedad, velocidad del viento, hora y los ultimos 7 días de clima.
+![Pronostico Del Tiempo](https://github.com/Mcarrascot/Dashboard/blob/main/assets/imgs/logo.png)
+
+Este proyecto muestra las condiciones climaticas de las ciudades del mundo que desees, donde  mediante un buscador puedes puedes ingresar la ciudad y te mostrara las condiciones climaticas, radiacion uv, humedad, velocidad del viento, hora y los ultimos 7 días de clima.
 
 utilizamos  los siguientes componentes
 chart js
 api wather
-node js
+node 
 html
 css
 
 
 
-
 ## Integrantes
 
-- [Monserrat Carrasco](https://github.com/Mcarrascot)
+- [Montserrat Carrasco](https://github.com/Mcarrascot)
 - [Paulina Huidobro](https://github.com/PaulinaHuidobro)
